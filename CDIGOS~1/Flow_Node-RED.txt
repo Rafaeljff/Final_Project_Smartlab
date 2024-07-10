@@ -1,0 +1,2067 @@
+[
+    {
+        "id": "83808e08302b7a44",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "1ea3f070c11f1e98",
+        "type": "http in",
+        "z": "83808e08302b7a44",
+        "name": "main_tag",
+        "url": "/tag_main",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 100,
+        "wires": [
+            [
+                "1b0efa476d1a5814",
+                "8be0ba6367fbf0a1"
+            ]
+        ]
+    },
+    {
+        "id": "3a34dc171e9a9257",
+        "type": "http in",
+        "z": "83808e08302b7a44",
+        "name": "tags_presentes",
+        "url": "/present_tags",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 260,
+        "wires": [
+            [
+                "b2a5a05d5801333f"
+            ]
+        ]
+    },
+    {
+        "id": "e03b962b6ee112a1",
+        "type": "http in",
+        "z": "83808e08302b7a44",
+        "name": "state",
+        "url": "/statebox",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 90,
+        "y": 180,
+        "wires": [
+            [
+                "bb414b8f80ead2d4"
+            ]
+        ]
+    },
+    {
+        "id": "b2a5a05d5801333f",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var str = msg.payload;\n\nvar parts = str.split(\",\");\n\nmsg.value1 = parts[1];\nmsg.value2 = parts[2];\nmsg.value3 = parts[3];\nmsg.value4 = parts[4];\nmsg.value5 = parts[5];\nmsg.value6 = parts[6];\nmsg.value7 = parts[7];\nmsg.value8 = parts[8];\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 260,
+        "wires": [
+            [
+                "dd49fdd6b954165d",
+                "8eb0f3c09dbf87ce",
+                "6261c34f3ce7eb1a",
+                "42b2e280dd3c9f83",
+                "5fee333946ceb8da",
+                "09d843c351e15fe0",
+                "5673e90560cb5949",
+                "56ef02f3da24b298",
+                "724d20dcf00a4160"
+            ]
+        ]
+    },
+    {
+        "id": "1b0efa476d1a5814",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "nomecaixa",
+        "func": "var str = msg.payload;\n\nmsg.topic = \"SELECT nome,laboratorio from caixas where caixas.tag='\"+str+\"'\";\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 60,
+        "wires": [
+            [
+                "3ebec8a46809bc6b"
+            ]
+        ]
+    },
+    {
+        "id": "6261c34f3ce7eb1a",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente3 = msg.value3;\n\nmsg.topic = \"Select nome,(Select laboratorio from caixas where caixas.tag=componentes.tagcaixa) as laboratorio,(Select nome from caixas where caixas.tag=componentes.tagcaixa) as caixa from componentes where tag='\"+componente3+\"'\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 380,
+        "wires": [
+            [
+                "81306b6559e88ef6"
+            ]
+        ]
+    },
+    {
+        "id": "8eb0f3c09dbf87ce",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente2 = msg.value2;\n\nmsg.topic = \"Select nome,(Select laboratorio from caixas where caixas.tag=componentes.tagcaixa) as laboratorio,(Select nome from caixas where caixas.tag=componentes.tagcaixa) as caixa from componentes where tag='\"+componente2+\"'\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 320,
+        "wires": [
+            [
+                "0a55722eae66b302"
+            ]
+        ]
+    },
+    {
+        "id": "42b2e280dd3c9f83",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente4 = msg.value4;\n\nmsg.topic = \"Select nome,(Select laboratorio from caixas where caixas.tag=componentes.tagcaixa) as laboratorio,(Select nome from caixas where caixas.tag=componentes.tagcaixa) as caixa from componentes where tag='\"+componente4+\"'\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 420,
+        "wires": [
+            [
+                "1d2f15a00dce4b99"
+            ]
+        ]
+    },
+    {
+        "id": "dd49fdd6b954165d",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "nome componente",
+        "func": "var componente1 = msg.value1;\n\nmsg.topic = \"Select nome,(Select laboratorio from caixas where caixas.tag=componentes.tagcaixa) as laboratorio,(Select nome from caixas where caixas.tag=componentes.tagcaixa) as caixa from componentes where tag='\"+componente1+\"'\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 260,
+        "wires": [
+            [
+                "05a0d073842c6a61"
+            ]
+        ]
+    },
+    {
+        "id": "8be0ba6367fbf0a1",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "insert_leitura_caixa",
+        "func": "var str = msg.payload;\n\n\n\nmsg.topic = \"INSERT INTO leituras (caixa,data) VALUES ('\"+str+\"',NOW())\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 120,
+        "wires": [
+            [
+                "e972862faebd68c8"
+            ]
+        ]
+    },
+    {
+        "id": "5fee333946ceb8da",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "insert_leitura_comp",
+        "func": "\n\nvar componente1 = msg.value1;\nvar componente2 = msg.value2;\nvar componente3 = msg.value3;\nvar componente4 = msg.value4;\nvar componente5 = msg.value5;\nvar componente6 = msg.value6;\nvar componente7 = msg.value7;\nvar componente8 = msg.value8;\nvar componente9 = msg.value9;\nvar componente10 = msg.value10;\nmsg.topic = \"Update leituras set componente1='\"+componente1+\"',componente2='\"+componente2+\"',componente3='\"+componente3+\"',componente3='\"+componente3+\"',componente4='\"+componente4+\"',componente5='\"+componente5+\"',componente6='\"+componente6+\"',componente7='\"+componente7+\"',componente8='\"+componente8+\"',componente9='\"+componente9+\"',componente10='\"+componente10+\"' where id = (SELECT max(id) FROM leituras)\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 200,
+        "wires": [
+            [
+                "18f0bb2e9ce4d621"
+            ]
+        ]
+    },
+    {
+        "id": "dabb4e396b9c2560",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "registo de leitura",
+        "func": "msg.topic = \"Select (Select nome from caixas where tag=leituras.caixa) as 'Caixa',(Select laboratorio from caixas where tag=leituras.caixa) as 'Laboratório',(Select nome from componentes where tag=leituras.componente1) as 'Componente 1',(Select nome from componentes where tag=leituras.componente2) as 'Componente 2',(Select nome from componentes where tag=leituras.componente3) as 'Componente 3',(Select nome from componentes where tag=leituras.componente4) as 'Componente 4',(Select nome from componentes where tag=leituras.componente5) as 'Componente 5',(Select nome from componentes where tag=leituras.componente6) as 'Componente 6',(Select nome from componentes where tag=leituras.componente7) as 'Componente 7',(Select nome from componentes where tag=leituras.componente8) as 'Componente 8',(Select nome from componentes where tag=leituras.componente9) as 'Componente 9',(Select nome from componentes where tag=leituras.componente10) as 'Componente 10',DATE_FORMAT(data, '%d-%m-%Y %T') as 'Data' from leituras ORDER BY data DESC\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 200,
+        "wires": [
+            [
+                "210218accac7ec62"
+            ]
+        ]
+    },
+    {
+        "id": "4755b617d53ce299",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "Componentes em Falta",
+        "func": "\n\nmsg.topic = \"Select nome from componentes where tagcaixa=(Select caixa from leituras where id = (SELECT max(id) FROM leituras) ) and tag<>(Select componente1 from leituras where id = (SELECT max(id) FROM leituras) ) and tag<>(Select componente2 from leituras where id = (SELECT max(id) FROM leituras) ) and tag<>(Select componente3 from leituras where id = (SELECT max(id) FROM leituras) and tag<>(Select componente4 from leituras where id = (SELECT max(id) FROM leituras) ) and tag<>(Select componente5 from leituras where id = (SELECT max(id) FROM leituras) ) and tag<>(Select componente6 from leituras where id = (SELECT max(id) FROM leituras) ) and tag<>(Select componente7 from leituras where id = (SELECT max(id) FROM leituras) ) and tag<>(Select componente8 from leituras where id = (SELECT max(id) FROM leituras) ) and tag<>(Select componente9 from leituras where id = (SELECT max(id) FROM leituras) ) and tag<>(Select componente10 from leituras where id = (SELECT max(id) FROM leituras) ) )\";\n\nreturn msg;\n\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 830,
+        "y": 160,
+        "wires": [
+            [
+                "df23662362d1e940"
+            ]
+        ]
+    },
+    {
+        "id": "3ebec8a46809bc6b",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "smartlab",
+        "x": 500,
+        "y": 60,
+        "wires": [
+            [
+                "cd1946630b7da9e7"
+            ]
+        ]
+    },
+    {
+        "id": "05a0d073842c6a61",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 660,
+        "y": 260,
+        "wires": [
+            [
+                "3e329e1826b860ec"
+            ]
+        ]
+    },
+    {
+        "id": "0a55722eae66b302",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 600,
+        "y": 320,
+        "wires": [
+            [
+                "1d52e23400f6f407"
+            ]
+        ]
+    },
+    {
+        "id": "81306b6559e88ef6",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 600,
+        "y": 380,
+        "wires": [
+            [
+                "31fe6de799ac77c7"
+            ]
+        ]
+    },
+    {
+        "id": "1d2f15a00dce4b99",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 600,
+        "y": 420,
+        "wires": [
+            [
+                "2b20c5396c8206ef"
+            ]
+        ]
+    },
+    {
+        "id": "e972862faebd68c8",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 520,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "18f0bb2e9ce4d621",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 640,
+        "y": 200,
+        "wires": [
+            [
+                "4755b617d53ce299",
+                "dabb4e396b9c2560"
+            ]
+        ]
+    },
+    {
+        "id": "210218accac7ec62",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 1000,
+        "y": 200,
+        "wires": [
+            [
+                "47592ea0a4790995"
+            ]
+        ]
+    },
+    {
+        "id": "df23662362d1e940",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 1020,
+        "y": 160,
+        "wires": [
+            [
+                "a001efe1f9a4b222"
+            ]
+        ]
+    },
+    {
+        "id": "a001efe1f9a4b222",
+        "type": "ui_table",
+        "z": "83808e08302b7a44",
+        "group": "2568ee5322c9b52d",
+        "name": "falta",
+        "order": 0,
+        "width": "21",
+        "height": "7",
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 1150,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "0b0ec79a80f97815",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "button_request_2",
+        "func": "\n\nif(global.get(\"request_variable\",true)){\n    msg.payload=\"inserir_from_node_red\";\n    global.set(\"request_variable\",false)\n}\n\n\nif(global.get(\"request_add_component\",true)){\n    msg.payload=\"inserir_novo_componente\";\n    global.set(\"request_add_component\",false)\n}\nif(global.get(\"request_add_component_mesa\",true)){\n    msg.payload=\"inserir_novo_componente_mesa\";\n    global.set(\"request_add_component_mesa\",false)\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1340,
+        "wires": [
+            [
+                "0cfb7cd6c7a77f13",
+                "bda4dd3106914e42"
+            ]
+        ]
+    },
+    {
+        "id": "a2e4d08e8a6deb2e",
+        "type": "http in",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "url": "/request_tag1",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 1340,
+        "wires": [
+            [
+                "0b0ec79a80f97815"
+            ]
+        ]
+    },
+    {
+        "id": "0cfb7cd6c7a77f13",
+        "type": "debug",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 840,
+        "y": 1280,
+        "wires": []
+    },
+    {
+        "id": "bda4dd3106914e42",
+        "type": "http response",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "statusCode": "200",
+        "headers": {
+            "content-type": "text/plain"
+        },
+        "x": 520,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "befb917fbfd7058b",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "button_click",
+        "func": "\n\nif(global.get(\"verificar\")){\n    msg.payload=\"verificar_caixa\";\n    global.set(\"verificar\",false);\n}\nelse if(global.get(\"adicionar_caixa\")){\n   \n    msg.payload=\"adicionar_caixa\";\n    global.set(\"adicionar_caixa\",false);\n    \n}\nelse if(global.get(\"adicionar_tag\")){\n    msg.payload=\"adicionar_tag\";\n    global.set(\"adicionar_tag\",false);\n}\nelse{ msg.payload=\"not_clicked\";}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 270,
+        "y": 1400,
+        "wires": [
+            [
+                "aac221d68aae4225",
+                "11f2050bc178a628"
+            ]
+        ]
+    },
+    {
+        "id": "2c560514c3024b80",
+        "type": "http in",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "url": "/buton",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 80,
+        "y": 1400,
+        "wires": [
+            [
+                "befb917fbfd7058b"
+            ]
+        ]
+    },
+    {
+        "id": "aac221d68aae4225",
+        "type": "debug",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 680,
+        "y": 1340,
+        "wires": []
+    },
+    {
+        "id": "4b3fb8e1169ddaa8",
+        "type": "ui_button",
+        "z": "83808e08302b7a44",
+        "name": "button_1",
+        "group": "11f217b5fc940b37",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "Verificar Caixa",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "1",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 80,
+        "y": 1540,
+        "wires": [
+            [
+                "d2e7f567424ace4b",
+                "5ea91af7647e1004"
+            ]
+        ]
+    },
+    {
+        "id": "d2e7f567424ace4b",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "button_click",
+        "func": "if(msg.payload==\"1\"){\nglobal.set(\"verificar\",true);\n}else if(msg.payload==\"2\"){\n  global.set(\"adicionar_caixa\",true);\n}else if(msg.payload==\"3\"){\n    global.set(\"adicionar_tag\",true);\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 1540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5ea91af7647e1004",
+        "type": "debug",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 200,
+        "y": 1880,
+        "wires": []
+    },
+    {
+        "id": "11f2050bc178a628",
+        "type": "http response",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "statusCode": "200",
+        "headers": {
+            "content-type": "text/plain"
+        },
+        "x": 480,
+        "y": 1400,
+        "wires": []
+    },
+    {
+        "id": "1810a04fd0bedbb0",
+        "type": "http in",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "url": "/checkin_checkout",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 770,
+        "y": 820,
+        "wires": [
+            [
+                "2e25f3c5771824f5"
+            ]
+        ]
+    },
+    {
+        "id": "7359d1cc6e4a523f",
+        "type": "debug",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 420,
+        "y": 1860,
+        "wires": []
+    },
+    {
+        "id": "547f11634268fe49",
+        "type": "http in",
+        "z": "83808e08302b7a44",
+        "name": "request_tag2/addcaixa",
+        "url": "/request_tag2",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 140,
+        "y": 1020,
+        "wires": [
+            [
+                "c10f468929974d54"
+            ]
+        ]
+    },
+    {
+        "id": "09d843c351e15fe0",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente5 = msg.value5;\n\nmsg.topic = \"Select nome,(Select laboratorio from caixas where caixas.tag=componentes.tagcaixa) as laboratorio,(Select nome from caixas where caixas.tag=componentes.tagcaixa) as caixa from componentes where tag='\"+componente5+\"'\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 480,
+        "wires": [
+            [
+                "dd61ebd0c81f7581"
+            ]
+        ]
+    },
+    {
+        "id": "5673e90560cb5949",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente6 = msg.value6;\n\nmsg.topic = \"Select nome,(Select laboratorio from caixas where caixas.tag=componentes.tagcaixa) as laboratorio,(Select nome from caixas where caixas.tag=componentes.tagcaixa) as caixa from componentes where tag='\"+componente6+\"'\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 540,
+        "wires": [
+            [
+                "bb25ff5494085738"
+            ]
+        ]
+    },
+    {
+        "id": "56ef02f3da24b298",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente7 = msg.value7;\n\nmsg.topic = \"Select nome,(Select laboratorio from caixas where caixas.tag=componentes.tagcaixa) as laboratorio,(Select nome from caixas where caixas.tag=componentes.tagcaixa) as caixa from componentes where tag='\"+componente7+\"'\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 600,
+        "wires": [
+            [
+                "31e5269ea2c01e45"
+            ]
+        ]
+    },
+    {
+        "id": "724d20dcf00a4160",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente8 = msg.value8;\n\nmsg.topic = \"Select nome,(Select laboratorio from caixas where caixas.tag=componentes.tagcaixa) as laboratorio,(Select nome from caixas where caixas.tag=componentes.tagcaixa) as caixa from componentes where tag='\"+componente8+\"'\";\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 660,
+        "wires": [
+            [
+                "1642698774840d0d"
+            ]
+        ]
+    },
+    {
+        "id": "dd61ebd0c81f7581",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 600,
+        "y": 480,
+        "wires": [
+            [
+                "9c30219dd3ad9905"
+            ]
+        ]
+    },
+    {
+        "id": "bb25ff5494085738",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 600,
+        "y": 540,
+        "wires": [
+            [
+                "93227fb5656807c3"
+            ]
+        ]
+    },
+    {
+        "id": "31e5269ea2c01e45",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 600,
+        "y": 600,
+        "wires": [
+            [
+                "8d22a12eab538394"
+            ]
+        ]
+    },
+    {
+        "id": "1642698774840d0d",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 600,
+        "y": 660,
+        "wires": [
+            [
+                "eef1417eeece441c"
+            ]
+        ]
+    },
+    {
+        "id": "a0311d87a4b5de4f",
+        "type": "http in",
+        "z": "83808e08302b7a44",
+        "name": "nova tag componente",
+        "url": "/nova_tag",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 120,
+        "y": 1240,
+        "wires": [
+            [
+                "571918e17a8175a4",
+                "d955398f6a638875"
+            ]
+        ]
+    },
+    {
+        "id": "c64ab63a3996d2c2",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "button_request",
+        "func": "if(msg.payload==\"message\"){\nglobal.set(\"request_variable\",true);\n}\nif(msg.payload==\"add_component\"){\nglobal.set(\"request_add_component\",true);\n}\nif(msg.payload==\"add_component_mesa\"){\nglobal.set(\"request_add_component_mesa\",true);\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 1640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3ea780e87144caf4",
+        "type": "debug",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 420,
+        "y": 1900,
+        "wires": []
+    },
+    {
+        "id": "571918e17a8175a4",
+        "type": "debug",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 280,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "e9b3ea0e3467fdac",
+        "type": "http in",
+        "z": "83808e08302b7a44",
+        "name": "tags_presentes",
+        "url": "/request_tag2",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 100,
+        "y": 800,
+        "wires": [
+            [
+                "1a49f2b8bd4b3d35"
+            ]
+        ]
+    },
+    {
+        "id": "1a49f2b8bd4b3d35",
+        "type": "debug",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 300,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "a15ea3ff8067271f",
+        "type": "ui_table",
+        "z": "83808e08302b7a44",
+        "group": "4860d2e870c09e0c",
+        "name": "tabela checkin/out",
+        "order": 0,
+        "width": "22",
+        "height": "6",
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 1810,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "2e25f3c5771824f5",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var str = msg.payload;\n\nvar parts = str.split(\",\");\n\nmsg.value1 = parts[1];\nmsg.value2 = parts[2];\nmsg.value3 = parts[3];\nmsg.value4 = parts[4];\nmsg.value5 = parts[6];\nmsg.value6 = parts[7];\nmsg.value7 = parts[8];\nmsg.value8 = parts[9];\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 960,
+        "y": 820,
+        "wires": [
+            [
+                "48d8069819685b59",
+                "e744bc30b7f6c6d1",
+                "e8fa98239d2fdd55",
+                "3ecd3525f20f63af",
+                "0f8e9149a7042f7b",
+                "b256fe297b847b70",
+                "52ce4f182bd3e33a",
+                "5f2d32116403e863",
+                "ed2da23a93aee463"
+            ]
+        ]
+    },
+    {
+        "id": "48d8069819685b59",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente4 = msg.value4;\n\nif (componente4 != null) {\n    \nmsg.topic = \"Insert into leituras2 (tag,data) VALUES ('\"+componente4+\"',NOW())\";\n\nreturn msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 920,
+        "wires": [
+            [
+                "cf900ba8a2b8b304"
+            ]
+        ]
+    },
+    {
+        "id": "e744bc30b7f6c6d1",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente5 = msg.value5;\n\nif (componente5 != null) {\n    \nmsg.topic = \"Insert into leituras2 (tag,data) VALUES ('\"+componente5+\"',NOW())\";\n\nreturn msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 960,
+        "wires": [
+            [
+                "ea486a773ddba275"
+            ]
+        ]
+    },
+    {
+        "id": "e8fa98239d2fdd55",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente6 = msg.value6;\n\nif (componente6 != null) {\n    \nmsg.topic = \"Insert into leituras2 (tag,data) VALUES ('\"+componente6+\"',NOW())\";\n\nreturn msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 1000,
+        "wires": [
+            [
+                "e24cc9663ba69d2e"
+            ]
+        ]
+    },
+    {
+        "id": "3ecd3525f20f63af",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente7 = msg.value7;\n\nif (componente7 != null) {\n    \nmsg.topic = \"Insert into leituras2 (tag,data) VALUES ('\"+componente7+\"',NOW())\";\n\nreturn msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 1040,
+        "wires": [
+            [
+                "c7427e690bef3368"
+            ]
+        ]
+    },
+    {
+        "id": "0f8e9149a7042f7b",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente8 = msg.value8;\n\nif (componente8 != null) {\n    \nmsg.topic = \"Insert into leituras2 (tag,data) VALUES ('\"+componente8+\"',NOW())\";\n\nreturn msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 1080,
+        "wires": [
+            [
+                "e6ae17815c5b5ca4"
+            ]
+        ]
+    },
+    {
+        "id": "d40e42f65f58d280",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 1300,
+        "y": 780,
+        "wires": [
+            [
+                "8339e099a71ede2e"
+            ]
+        ]
+    },
+    {
+        "id": "0f7641cf28625dbe",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 1280,
+        "y": 840,
+        "wires": [
+            [
+                "8339e099a71ede2e"
+            ]
+        ]
+    },
+    {
+        "id": "b256fe297b847b70",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "inserir leituras2",
+        "func": "var componente1 = msg.value1;\n\nif (componente1 != null) {\n\nmsg.topic = \"Insert into leituras2 (tag,data) VALUES ('\"+componente1+\"',NOW())\";\n\nreturn msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1140,
+        "y": 780,
+        "wires": [
+            [
+                "d40e42f65f58d280"
+            ]
+        ]
+    },
+    {
+        "id": "52ce4f182bd3e33a",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente2 = msg.value2;\n\nif (componente2 != null) {\n\nmsg.topic = \"Insert into leituras2 (tag,data) VALUES ('\"+componente2+\"',NOW())\";\n\nreturn msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 840,
+        "wires": [
+            [
+                "0f7641cf28625dbe"
+            ]
+        ]
+    },
+    {
+        "id": "5f2d32116403e863",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente3 = msg.value3;\n\nif (componente3 != null) {\n    \nmsg.topic = \"Insert into leituras2 (tag,data) VALUES ('\"+componente3+\"',NOW())\";\n\nreturn msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 880,
+        "wires": [
+            [
+                "ead7bb543f322eeb"
+            ]
+        ]
+    },
+    {
+        "id": "ead7bb543f322eeb",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 1280,
+        "y": 880,
+        "wires": [
+            [
+                "8339e099a71ede2e"
+            ]
+        ]
+    },
+    {
+        "id": "8339e099a71ede2e",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "ultimo registo",
+        "func": "msg.topic = `Select (Select nome from caixas where tag=leituras2.tag UNION Select nome from componentes where tag=leituras2.tag UNION Select nome from componentesMesa where tag=leituras2.tag) as 'Nome',\n(CASE WHEN (Select count(*) from caixas where tag=leituras2.tag)>0 or (Select count(*) from componentesMesa where tag=leituras2.tag)>0  then (Select laboratorio from caixas where tag=leituras2.tag UNION Select laboratorio from componentesMesa where tag=leituras2.tag) ELSE (Select (Select laboratorio from caixas where tag=componentes.tagcaixa) from componentes where tag=leituras2.tag) END) as 'Laboratório',\nDATE_FORMAT(data, '%d-%m-%Y %T') as 'Data' \nfrom leituras2 \norder by data desc`;\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1490,
+        "y": 1000,
+        "wires": [
+            [
+                "2ddb308e1d21dcb2"
+            ]
+        ]
+    },
+    {
+        "id": "2ddb308e1d21dcb2",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 1640,
+        "y": 1000,
+        "wires": [
+            [
+                "a15ea3ff8067271f"
+            ]
+        ]
+    },
+    {
+        "id": "bf6fe4eba355fee3",
+        "type": "ui_form",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "label": "",
+        "group": "1eb0575045241f14",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Tag",
+                "value": "tag",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Laboratório",
+                "value": "laboratorio",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Nome",
+                "value": "nome",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "tag": "",
+            "laboratorio": "",
+            "nome": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "payload",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 490,
+        "y": 1020,
+        "wires": [
+            [
+                "dc38fc3c06abf142",
+                "413ce79442eb1f07"
+            ]
+        ]
+    },
+    {
+        "id": "c10f468929974d54",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var str = msg.payload;\n\nmsg.payload = {\"tag\":str}\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 1020,
+        "wires": [
+            [
+                "bf6fe4eba355fee3",
+                "d6bcf3bea80c5de4"
+            ]
+        ]
+    },
+    {
+        "id": "d6bcf3bea80c5de4",
+        "type": "debug",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 560,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "dc38fc3c06abf142",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "\nmsg.topic = \"INSERT INTO caixas (tag,laboratorio,nome) VALUES ('\"+msg.payload.tag+\"','\"+msg.payload.laboratorio+\"','\"+msg.payload.nome+\"')\";\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 1020,
+        "wires": [
+            [
+                "06d03b03237f1ecd"
+            ]
+        ]
+    },
+    {
+        "id": "06d03b03237f1ecd",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 780,
+        "y": 1020,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "413ce79442eb1f07",
+        "type": "debug",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 620,
+        "y": 1140,
+        "wires": []
+    },
+    {
+        "id": "ed2da23a93aee463",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var componente9 = msg.value9;\n\nif (componente9 != null) {\n    \nmsg.topic = \"Insert into leituras2 (tag,data) VALUES ('\"+componente9+\"',NOW())\";\n\nreturn msg;\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1120,
+        "y": 1120,
+        "wires": [
+            [
+                "e8e7e4aadaa8739f"
+            ]
+        ]
+    },
+    {
+        "id": "cf900ba8a2b8b304",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 1280,
+        "y": 920,
+        "wires": [
+            [
+                "8339e099a71ede2e"
+            ]
+        ]
+    },
+    {
+        "id": "ea486a773ddba275",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 1280,
+        "y": 960,
+        "wires": [
+            [
+                "8339e099a71ede2e"
+            ]
+        ]
+    },
+    {
+        "id": "e24cc9663ba69d2e",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 1280,
+        "y": 1000,
+        "wires": [
+            [
+                "8339e099a71ede2e"
+            ]
+        ]
+    },
+    {
+        "id": "c7427e690bef3368",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 1280,
+        "y": 1040,
+        "wires": [
+            [
+                "8339e099a71ede2e"
+            ]
+        ]
+    },
+    {
+        "id": "e6ae17815c5b5ca4",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 1280,
+        "y": 1080,
+        "wires": [
+            [
+                "8339e099a71ede2e"
+            ]
+        ]
+    },
+    {
+        "id": "e8e7e4aadaa8739f",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 1280,
+        "y": 1120,
+        "wires": [
+            [
+                "8339e099a71ede2e"
+            ]
+        ]
+    },
+    {
+        "id": "d955398f6a638875",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var str = msg.payload;\n\nmsg.payload = {\"tag\":str}\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 1240,
+        "wires": [
+            [
+                "326bbb656e4e6575"
+            ]
+        ]
+    },
+    {
+        "id": "326bbb656e4e6575",
+        "type": "ui_form",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "label": "",
+        "group": "edd8c1b3fb894eb4",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Tag",
+                "value": "tag",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Tag da caixa",
+                "value": "tagcaixa",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Nome",
+                "value": "nome",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "tag": "",
+            "tagcaixa": "",
+            "nome": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "payload",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 450,
+        "y": 1220,
+        "wires": [
+            [
+                "0c5a08f7a1eb9742"
+            ]
+        ]
+    },
+    {
+        "id": "0c5a08f7a1eb9742",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "\nmsg.topic = \"INSERT INTO componentes (tag,tagcaixa,nome) VALUES ('\"+msg.payload.tag+\"','\"+msg.payload.tagcaixa+\"','\"+msg.payload.nome+\"')\";\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 600,
+        "y": 1220,
+        "wires": [
+            [
+                "26403427878da1bb"
+            ]
+        ]
+    },
+    {
+        "id": "26403427878da1bb",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 780,
+        "y": 1220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cd1946630b7da9e7",
+        "type": "ui_text",
+        "z": "83808e08302b7a44",
+        "group": "ea4b592e7a26c268",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "name": "Caixa",
+        "label": "Caixa:",
+        "format": "{{msg.payload[0].nome}},{{msg.payload[0].laboratorio}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 730,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "bb414b8f80ead2d4",
+        "type": "ui_text",
+        "z": "83808e08302b7a44",
+        "group": "ea4b592e7a26c268",
+        "order": 4,
+        "width": 0,
+        "height": 0,
+        "name": "state",
+        "label": "Estado:",
+        "format": "{{msg.payload}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 250,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "3e329e1826b860ec",
+        "type": "ui_text",
+        "z": "83808e08302b7a44",
+        "group": "ea4b592e7a26c268",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Componente1:",
+        "format": "{{msg.payload[0].nome}},{{msg.payload[0].laboratorio}},{{msg.payload[0].caixa}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 840,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "1d52e23400f6f407",
+        "type": "ui_text",
+        "z": "83808e08302b7a44",
+        "group": "ea4b592e7a26c268",
+        "order": 6,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Componente2:",
+        "format": "{{msg.payload[0].nome}},{{msg.payload[0].laboratorio}},{{msg.payload[0].caixa}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 780,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "31fe6de799ac77c7",
+        "type": "ui_text",
+        "z": "83808e08302b7a44",
+        "group": "ea4b592e7a26c268",
+        "order": 7,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Componente3:",
+        "format": "{{msg.payload[0].nome}},{{msg.payload[0].laboratorio}},{{msg.payload[0].caixa}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 800,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "2b20c5396c8206ef",
+        "type": "ui_text",
+        "z": "83808e08302b7a44",
+        "group": "ea4b592e7a26c268",
+        "order": 8,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Componente4:",
+        "format": "{{msg.payload[0].nome}},{{msg.payload[0].laboratorio}},{{msg.payload[0].caixa}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 800,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "9c30219dd3ad9905",
+        "type": "ui_text",
+        "z": "83808e08302b7a44",
+        "group": "ea4b592e7a26c268",
+        "order": 9,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Componente5:",
+        "format": "{{msg.payload[0].nome}},{{msg.payload[0].laboratorio}},{{msg.payload[0].caixa}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 800,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "93227fb5656807c3",
+        "type": "ui_text",
+        "z": "83808e08302b7a44",
+        "group": "ea4b592e7a26c268",
+        "order": 10,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Componente6",
+        "format": "{{msg.payload[0].nome}},{{msg.payload[0].laboratorio}},{{msg.payload[0].caixa}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 800,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "8d22a12eab538394",
+        "type": "ui_text",
+        "z": "83808e08302b7a44",
+        "group": "ea4b592e7a26c268",
+        "order": 11,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Componente7:",
+        "format": "{{msg.payload[0].nome}},{{msg.payload[0].laboratorio}},{{msg.payload[0].caixa}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 800,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "eef1417eeece441c",
+        "type": "ui_text",
+        "z": "83808e08302b7a44",
+        "group": "ea4b592e7a26c268",
+        "order": 12,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "label": "Componente8:",
+        "format": "{{msg.payload[0].nome}},{{msg.payload[0].laboratorio}},{{msg.payload[0].caixa}}",
+        "layout": "row-left",
+        "className": "",
+        "x": 800,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "e8a27d75060ed39b",
+        "type": "ui_button",
+        "z": "83808e08302b7a44",
+        "name": "add_component",
+        "group": "11f217b5fc940b37",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "Adicionar componente",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "add_component",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 1680,
+        "wires": [
+            [
+                "c64ab63a3996d2c2",
+                "3ea780e87144caf4"
+            ]
+        ]
+    },
+    {
+        "id": "f365036220d0e1be",
+        "type": "ui_button",
+        "z": "83808e08302b7a44",
+        "name": "botton_ventura",
+        "group": "11f217b5fc940b37",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "Adicionar Caixa",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "message",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 100,
+        "y": 1600,
+        "wires": [
+            [
+                "7359d1cc6e4a523f",
+                "c64ab63a3996d2c2"
+            ]
+        ]
+    },
+    {
+        "id": "e794ac101475734a",
+        "type": "ui_button",
+        "z": "83808e08302b7a44",
+        "name": "add_component_mesa",
+        "group": "11f217b5fc940b37",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "label": "Adicionar componente Mesa",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "add_component_mesa",
+        "payloadType": "str",
+        "topic": "topic",
+        "topicType": "msg",
+        "x": 460,
+        "y": 1760,
+        "wires": [
+            [
+                "c64ab63a3996d2c2"
+            ]
+        ]
+    },
+    {
+        "id": "1845580d3a2f3595",
+        "type": "http in",
+        "z": "83808e08302b7a44",
+        "name": "nova tag componente_mesa",
+        "url": "/nova_tag_mesa",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 440,
+        "y": 1480,
+        "wires": [
+            [
+                "0ea3f7d71e85c341",
+                "59ba08717f6acc42"
+            ]
+        ]
+    },
+    {
+        "id": "0ea3f7d71e85c341",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "var str = msg.payload;\n\nmsg.payload = {\"tag\":str}\n\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 620,
+        "y": 1560,
+        "wires": [
+            [
+                "3e3f18a7ef5d5758"
+            ]
+        ]
+    },
+    {
+        "id": "3e3f18a7ef5d5758",
+        "type": "ui_form",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "label": "",
+        "group": "d8bd837f785ee7c1",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Tag",
+                "value": "tag",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Laboratório",
+                "value": "laboratorio",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Nome",
+                "value": "nome",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Posto",
+                "value": "posto",
+                "type": "text",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "tag": "",
+            "laboratorio": "",
+            "nome": "",
+            "posto": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "payload",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 770,
+        "y": 1560,
+        "wires": [
+            [
+                "ebb04a3d45eaeab5"
+            ]
+        ]
+    },
+    {
+        "id": "ebb04a3d45eaeab5",
+        "type": "function",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "func": "\nmsg.topic = \"INSERT INTO caixas (tag,laboratorio,nome,posto) VALUES ('\"+msg.payload.tag+\"','\"+msg.payload.laboratorio+\"','\"+msg.payload.nome+\"','\"+msg.payload.posto+\"')\";\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 900,
+        "y": 1560,
+        "wires": [
+            [
+                "017574b89c5256f3"
+            ]
+        ]
+    },
+    {
+        "id": "017574b89c5256f3",
+        "type": "mysql",
+        "z": "83808e08302b7a44",
+        "mydb": "9a0773dac2f6296a",
+        "name": "",
+        "x": 760,
+        "y": 1640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "59ba08717f6acc42",
+        "type": "debug",
+        "z": "83808e08302b7a44",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "payload",
+        "statusType": "auto",
+        "x": 700,
+        "y": 1480,
+        "wires": []
+    },
+    {
+        "id": "47592ea0a4790995",
+        "type": "ui_table",
+        "z": "83808e08302b7a44",
+        "group": "f0cd59856c49643c",
+        "name": "tabela de registo",
+        "order": 0,
+        "width": "23",
+        "height": "13",
+        "columns": [],
+        "outputs": 0,
+        "cts": false,
+        "x": 1170,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "9a0773dac2f6296a",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "localhost",
+        "port": "3306",
+        "db": "smartlab",
+        "tz": "17:55:00",
+        "charset": "UTF8"
+    },
+    {
+        "id": "2568ee5322c9b52d",
+        "type": "ui_group",
+        "name": "Componentes em Falta",
+        "tab": "99ab8dc5.f435c",
+        "order": 2,
+        "disp": true,
+        "width": "21",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "11f217b5fc940b37",
+        "type": "ui_group",
+        "name": "Menu Principal",
+        "tab": "dd93aa09.db1158",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "4860d2e870c09e0c",
+        "type": "ui_group",
+        "name": "check",
+        "tab": "b7e67c97fdfd28e5",
+        "order": 1,
+        "disp": true,
+        "width": "22",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "1eb0575045241f14",
+        "type": "ui_group",
+        "name": "Adicionar caixa",
+        "tab": "83f66005fac3a7cc",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "edd8c1b3fb894eb4",
+        "type": "ui_group",
+        "name": "Adicionar Componente",
+        "tab": "83f66005fac3a7cc",
+        "order": 2,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "ea4b592e7a26c268",
+        "type": "ui_group",
+        "name": "Leituras",
+        "tab": "294108e91d90bc90",
+        "order": 2,
+        "disp": true,
+        "width": "25",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "d8bd837f785ee7c1",
+        "type": "ui_group",
+        "name": "Componente Mesa",
+        "tab": "83f66005fac3a7cc",
+        "order": 3,
+        "disp": true,
+        "width": "6",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "f0cd59856c49643c",
+        "type": "ui_group",
+        "name": "Registo de Leituras",
+        "tab": "4a2edba49f20398a",
+        "order": 1,
+        "disp": true,
+        "width": "23",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "99ab8dc5.f435c",
+        "type": "ui_tab",
+        "name": "Material em falta",
+        "icon": "dashboard",
+        "order": 2,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "dd93aa09.db1158",
+        "type": "ui_tab",
+        "name": "Menu Principal",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "b7e67c97fdfd28e5",
+        "type": "ui_tab",
+        "name": "Check in/out",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "83f66005fac3a7cc",
+        "type": "ui_tab",
+        "name": "Adicionar",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "294108e91d90bc90",
+        "type": "ui_tab",
+        "name": "Leituras",
+        "icon": "dashboard",
+        "order": 4,
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "4a2edba49f20398a",
+        "type": "ui_tab",
+        "name": "Registo de Leituras",
+        "icon": "dashboard",
+        "order": 3,
+        "disabled": false,
+        "hidden": false
+    }
+]

@@ -1,0 +1,210 @@
+#include "Arduino.h"
+#include "RFID_command.h"
+#include <stdio.h>
+#include <string.h>
+#include <WiFi.h>
+#include <PubSubClient.h>
+#include <HTTPClient.h>
+#include <Wire.h>
+#include <SPI.h>
+#include <Adafruit_BME280.h>
+UHF_RFID RFID;
+UHF_RFID RFID2;
+ManyInfo cards_in;
+ManyInfo cards_out;
+byte number_cards_input;
+byte number_cards_output;
+String tags;
+int flag = -1;
+
+WiFiClient Wificlient;
+PubSubClient client(Wificlient);
+HTTPClient http;
+int change_rfid = 4;
+const char *ssid = "labs";
+const char *password = "robot1cA!ESTG";
+const char *detected_tags = "http://10.20.228.54:1880/detected_tags";
+const char *check_in_out = "http://10.20.228.54:1880/checkin_checkout";
+volatile unsigned long ul;
+volatile unsigned long millis_counter;
+unsigned long previousMillis = 0;
+
+void setup() {
+	digitalWrite(change_rfid, LOW);
+	Serial2.begin(115200, SERIAL_8N1, 16, 17); //16.17
+
+	Serial.begin(115200);
+
+	RFID.Set_transmission_Power(2600);
+	RFID.Set_the_Select_mode();
+	RFID.Delay(100);
+	RFID.Readcallback();
+	RFID.clean_data();
+
+	RFID2.Set_transmission_Power(2600);
+	RFID2.Set_the_Select_mode();
+	RFID2.Delay(100);
+	RFID2.Readcallback();
+	RFID2.clean_data();
+	pinMode(change_rfid, OUTPUT);
+	WiFi.begin(ssid, password);
+	Serial.println("Connecting to wifi...");
+	while (WiFi.status() != WL_CONNECTED) {
+		delay(500);
+		Serial.print("still not connected to wifi");
+	}
+
+	digitalWrite(change_rfid, HIGH);
+
+}
+
+void loop() {
+	get_tags_in();
+	get_tags_out();
+	/*if (millis()> millis_counter + 250) {
+	 if (digitalRead(change_rfid) == HIGH)
+	 get_tags_in();
+	 digitalWrite(change_rfid, LOW);
+	 get_
+
+	 }
+	 millis_counter = millis();
+	 if (millis()> millis_counter + 250) {
+	 if(digitalRead(change_rfid) == LOW)
+	 get_tags_out();
+	 digitalWrite(change_rfid, HIGH);
+
+	 }
+
+	 Serial.println("\nTags detetadas:");
+	 Serial.print(tags);
+	 Serial.println("");
+	 //}*/
+	if (digitalRead(change_rfid) == HIGH) {
+
+		digitalWrite(change_rfid, LOW);
+	} else {
+		digitalWrite(change_rfid, HIGH);
+	}
+
+	delay(2000);
+}
+
+//send_tags();
+
+void send_tags() {
+	/*
+	 Serial.println("\nTags detetadas:");
+	 Serial.print(tags);
+	 /*
+	 if (WiFi.status() == WL_CONNECTED) { //falta condicao de selecao
+	 http.begin(check_in_out);
+
+	 if (flag == 1) {
+	 flag = -1;
+	 http.POST("saida");
+	 } else if (flag == 0) {
+	 flag = -1;
+	 http.POST("entrada");
+	 }
+	 http.end();
+	 http.begin(detected_tags);
+	 http.POST(tags);
+	 http.end();
+	 }
+	 */
+}
+
+void get_tags_in() {
+	//digitalWrite(change_rfid, HIGH);
+
+	number_cards_input = 0;
+	//cards_in.len = 0;
+	cards_in = RFID.Multiple_polling_instructions(20);
+	number_cards_input = cards_in.len;
+	if (number_cards_input > 0) {
+
+		for (size_t i = 0; i < number_cards_input; i++) {
+
+			//tags = tags + cards_in.card[i]._EPC;
+			Serial.println(cards_in.card[i]._EPC);
+		}
+		number_cards_input = 0;
+		RFID.clean_data();
+		RFID.Delay(150);
+
+		digitalWrite(change_rfid, HIGH);
+		delay(500);
+		number_cards_output = 0;
+
+		while (number_cards_output == 0) {
+			//Serial.print("waiting for other reading from another reader");
+			cards_out.len = 0;
+			cards_out = RFID2.Multiple_polling_instructions(20);
+			number_cards_output = cards_out.len;
+			if (number_cards_output > 0) {
+				for (size_t i = 0; i < number_cards_output; i++) {
+					Serial.println(cards_out.card[i]._EPC);
+				}
+				RFID2.clean_data();
+				RFID2.Delay(150);
+			}
+
+		}
+		Serial.println("\nPassou no leitor de entrada para saida");
+		number_cards_output = 0;
+		number_cards_input = 0;
+		/*	cards_in.len = 0;
+		 cards_out.len = 0;*/
+	}
+
+
+}
+
+void get_tags_out() {
+	//digitalWrite(change_rfid, HIGH);
+	tags = "";
+	number_cards_output = 0;
+	number_cards_input = 0;
+	cards_out = RFID2.Multiple_polling_instructions(20);
+	number_cards_output = cards_out.len;
+	if (number_cards_output > 0) {
+
+		for (size_t i = 0; i < number_cards_output; i++) {
+
+			//tags = tags + cards_out.card[i]._EPC;
+			Serial.println(cards_out.card[i]._EPC);
+		}
+		RFID.clean_data();
+		RFID.Delay(150);
+
+		number_cards_output = 0;
+		number_cards_input = 0;
+
+		digitalWrite(change_rfid, LOW);
+		delay(2000);
+
+		while (number_cards_input == 0) {
+			//Serial.print("waiting for other reading from another reader");
+			cards_in.len = 0;
+			cards_in = RFID.Multiple_polling_instructions(20);
+			number_cards_input = cards_in.len;
+			if (number_cards_input > 0) {
+				for (size_t i = 0; i < number_cards_input; i++) {
+
+					Serial.println(cards_in.card[i]._EPC);
+				}
+				RFID.clean_data();
+				RFID.Delay(150);
+			}
+
+		}
+		Serial.println("\nPassou no leitor de saida para entrada");
+		number_cards_output = 0;
+		number_cards_input = 0;
+	}
+
+
+
+}
+
