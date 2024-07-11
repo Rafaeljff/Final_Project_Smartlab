@@ -18,7 +18,7 @@ platform Node-RED
 
 
 
-**Implementação Hardware**
+**Implementação Hardware para o 1º sistema de verificação**
 ![image](https://github.com/Rafaeljff/Final_Project_Smartlab/assets/45770575/0b8900a8-5513-4c48-a539-dc07e64bf565)
 
 
