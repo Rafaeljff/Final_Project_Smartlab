@@ -1,4 +1,5 @@
 **Context**
+
 The Smart lab Check project consists of a system that allows the detection and identification of equipment, materials and components present and absent from any laboratory.
 To implement this equipment tracking system, two systems with different functionalities were developed. These systems are called Check Box and Check IN/OUT. The Check Box performs the verification 
 and management of laboratory materials, while the Check IN/OUT system intends to detect the exit or 
