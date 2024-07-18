@@ -1,6 +1,6 @@
 ### **Context**
 
-The Smart lab Check project consists of a system that allows the detection and identification of equipment, materials and components present and absent from any laboratory.
+The Smart lab Check project consists of a system that allows the detection and identification of equipement, materials and components present and absent from any laboratory.
 To implement this equipment tracking system, two systems with different functionalities were developed. These systems are called Check Box and Check IN/OUT.
 
 The Check Box performs the verification and management of laboratory materials, while the Check IN/OUT system intends to detect the exit or 
@@ -30,6 +30,7 @@ In the end, everything can be seen through the online platform Node-RED and be s
 
 
 ### **Database regisration**
+
 ![image](https://github.com/user-attachments/assets/211fde9a-7cf8-4a29-ae75-8171f8bb3f78)
 
 ![image](https://github.com/user-attachments/assets/21ef90b3-ddd7-4a49-8e5d-2b36718c5ce2)
@@ -42,11 +43,14 @@ In the end, everything can be seen through the online platform Node-RED and be s
 ### **Local System display** 
 
 **Component box inspection** 
+
 ![image](https://github.com/user-attachments/assets/4ffed42c-513d-4d10-ac89-1abf8b13fcd9)
 
 
 **For a missing component**
+
 ![image](https://github.com/user-attachments/assets/99f18929-a204-4643-a521-66def9b3fe25)
+
 
 **For all components present within the component box** 
 ![image](https://github.com/user-attachments/assets/2e84ec60-536f-4cac-930e-f1c57d8efe67)
