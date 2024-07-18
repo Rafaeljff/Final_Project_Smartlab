@@ -53,6 +53,7 @@ In the end, everything can be seen through the online platform Node-RED and be s
 
 
 **For all components present within the component box** 
+
 ![image](https://github.com/user-attachments/assets/2e84ec60-536f-4cac-930e-f1c57d8efe67)
 
 
