@@ -39,7 +39,7 @@ In the end, everything can be seen through the online platform Node-RED and be s
 ![image](https://github.com/user-attachments/assets/87080626-de93-471e-bb7f-cf86e070d966)
 
 
-### Local System display** 
+### **Local System display** 
 
 **Component box inspection** 
 ![image](https://github.com/user-attachments/assets/4ffed42c-513d-4d10-ac89-1abf8b13fcd9)
